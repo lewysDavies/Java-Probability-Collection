@@ -1,6 +1,6 @@
 # Java-Probability-Collection
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/badges/build.png?b=master)](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/build-status/master) [![](https://jitpack.io/v/lewysDavies/Java-Probability-Collection.svg)](https://jitpack.io/#lewysDavies/Java-Probability-Collection)<br>
-Generic and Highly Optimised Java Data-Structure for Retrieving Random Elements With Probability
+Generic and Highly Optimised Java Data-Structure for Retrieving Random Elements with Probability
 
 # Usage
 ```
@@ -25,7 +25,7 @@ RareAF's Probability is 0.01% | Was selected 0.01% of the time
 ```
 
 # Performance
-Get performance has been significatly reduced in comparision to the previous Map implementation. This has been achieved with customly compared TreeSets. 
+Get performance has been significantly reduced in comparison to my previous map implementation. This has been achieved with custom compared TreeSets. 
 0.314ms to just 0.004.
 ```
 Benchmark                Mode  Cnt  Score    Error   Units
