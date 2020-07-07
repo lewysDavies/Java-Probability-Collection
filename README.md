@@ -25,7 +25,7 @@ RareAF's Probability is 0.01% | Was selected 0.01% of the time
 ```
 
 # Performance
-Get performance has been significantly reduced in comparison to my previous map implementation. This has been achieved with custom compared TreeSets. 
+Get performance has been significantly improved in comparison to my previous map implementation. This has been achieved with custom compared TreeSets. 
 0.314ms to just 0.004.
 ```
 Benchmark                Mode  Cnt  Score    Error   Units
