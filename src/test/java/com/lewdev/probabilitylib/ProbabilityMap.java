@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
  * </ul>
  * 
  * @param <E> Type of elements
+ * @version 0.5
  * 
  * @author Lewys Davies
  */
@@ -35,8 +36,7 @@ public class ProbabilityMap<E> {
 	/**
 	 * Construct a empty probability map
 	 */
-	public ProbabilityMap() {
-	}
+	public ProbabilityMap() { }
 
 	/**
 	 * Construct a probability map with initial elements
