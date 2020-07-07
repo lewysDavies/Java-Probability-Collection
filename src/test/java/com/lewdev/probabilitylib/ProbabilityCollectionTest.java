@@ -127,7 +127,7 @@ public class ProbabilityCollectionTest {
 		assertTrue(collection.getTotalProbability() == 0);
 	}
 
-	@RepeatedTest(3000)
+	@RepeatedTest(1_000_000)
 	public void test_probability() {
 		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
 		
@@ -140,7 +140,7 @@ public class ProbabilityCollectionTest {
 		collection.add("C", 10);
 		
 		int a = 0, b = 0, c = 0;
-		int totalGets = 10_0000;
+		int totalGets = 100_000;
 		
 		for(int i = 0; i < totalGets; i++) {
 			String random = collection.get();
@@ -158,7 +158,7 @@ public class ProbabilityCollectionTest {
 		double bResult = (double) totalGets / b;
 		double cResult = (double) totalGets / c;
 		
-		double acceptableDeviation = 0.5; //5 %
+		double acceptableDeviation = 0.35; //3.5 %
 		
 		assertTrue(Math.abs(aProb - aResult) <= acceptableDeviation);
 		assertTrue(Math.abs(bProb - bResult) <= acceptableDeviation);
