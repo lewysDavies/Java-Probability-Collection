@@ -22,6 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * </ul>
  * 
  * @author Lewys Davies
+ * @version 0.5
  *
  * @param <E> Type of elements
  */
