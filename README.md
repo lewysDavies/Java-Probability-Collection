@@ -13,7 +13,7 @@ String random = collection.get();
 ```
 
 # Proven Probability
-The probability test is run **10,000 times**. Each time getting **100,000** random elements and counting the spread. The test would not pass if the spread had over **3.5%** deviation from the expected probability.
+The probability test is run **1,000,000 times**. Each time getting **100,000** random elements and counting the spread. The test would not pass if the spread had over **3.5%** deviation from the expected probability.
 
 Here is a real world example which used 1,000 selects:
 ```
@@ -56,25 +56,25 @@ or for the fancy users, you could use Maven:
 **Maven Shade This Dependency:**
 ```
 <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-shade-plugin</artifactId>
-    <version>3.1.1</version>
-    <executions>
-    	<execution>
-    		<configuration>
-    			<dependencyReducedPomLocation>${project.build.directory}/drp.xml</dependencyReducedPomLocation>
-    			<relocations>
-    				<relocation>
-    				    <!-- Avoid Name Conflics -->
-    				    <pattern>com.lewdev.probabilitylib</pattern>
-    				    <shadedPattern>***<!--YOUR.PACKAGE.HERE-->***.probabilitylib</shadedPattern>
-    				</relocation>
-    		</configuration>
-    		<phase>package</phase>
-    		<goals>
-    			<goal>shade</goal>
-    		</goals>
-    	</execution>
-    </executions>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-shade-plugin</artifactId>
+  <version>3.1.1</version>
+  <executions>
+    <execution>
+      <configuration>
+        <relocations>
+           <relocation>
+              <!-- Avoid Name Conflics -->
+              <pattern>com.lewdev.probabilitylib</pattern>
+              <shadedPattern>***<!--YOUR.PACKAGE.HERE-->***.probabilitylib</shadedPattern>
+            </relocation>
+          </relocations>
+       </configuration>
+     <phase>package</phase>
+     <goals>
+       <goal>shade</goal>
+     </goals>
+   </execution>
+  </executions>
 </plugin>
 ```
