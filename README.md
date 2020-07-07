@@ -1,5 +1,5 @@
 # Java-Probability-Collection
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/badges/build.png?b=master)](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/build-status/master) [![](https://jitpack.io/v/lewysDavies/Java-Probability-Collection.svg)](https://jitpack.io/#lewysDavies/Java-Probability-Collection)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/badges/build.png?b=master)](https://scrutinizer-ci.com/g/lewysDavies/Java-Probability-Collection/build-status/master) [![](https://jitpack.io/v/lewysDavies/Java-Probability-Collection.svg)](https://jitpack.io/#lewysDavies/Java-Probability-Collection)<br>
 Generic and Highly Optimised Java Data-Structure for Retrieving Random Elements With Probability
 
 # Usage
@@ -62,11 +62,11 @@ or for the fancy users, you could use Maven:
     <executions>
     	<execution>
     		<configuration>
-    			<dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+    			<dependencyReducedPomLocation>${project.build.directory}/drp.xml</dependencyReducedPomLocation>
     			<relocations>
     				<relocation>
     				    <!-- Avoid Name Conflics -->
-    					<pattern>com.lewdev.probabilitylib</pattern>
+    				    <pattern>com.lewdev.probabilitylib</pattern>
     				    <shadedPattern>***<!--YOUR.PACKAGE.HERE-->***.probabilitylib</shadedPattern>
     				</relocation>
     		</configuration>
