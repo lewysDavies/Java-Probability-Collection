@@ -36,8 +36,8 @@ old_mapGet               avgt   10  0.314 ±  0.069   s/op
 ```
 
 # Installation
-**Super Simple: Copy ProbabilityCollection.java into your project**
-or for the fancy users, you could use Maven:
+**Super Simple: Copy ProbabilityCollection.java into your project**<br><br>
+or for the fancy users, you could use Maven:<br>
 **Repository:**
 ```
 <repository>
