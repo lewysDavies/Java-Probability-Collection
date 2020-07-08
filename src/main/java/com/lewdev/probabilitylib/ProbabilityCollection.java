@@ -2,6 +2,7 @@ package com.lewdev.probabilitylib;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -22,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * </ul>
  * 
  * @author Lewys Davies
- * @version 0.5
+ * @version 0.6
  *
  * @param <E> Type of elements
  */
@@ -60,12 +61,15 @@ public class ProbabilityCollection<E> {
 	/**
 	 * @param object
 	 * @return True if the collection contains the object, else False
+	 * @throws IllegalArgumentException if object null
 	 */
 	public boolean contains(E object) {
+		if(object == null) {
+			throw new IllegalArgumentException("Cannot check if null object is contained in a collection");
+		}
+		
 		return this.collection.stream()
-			.filter(entry -> entry.getObject().equals(object))
-			.findFirst()
-			.isPresent();
+			.anyMatch(entry -> entry.getObject().equals(object));
 	}
 
 	/**
@@ -78,12 +82,24 @@ public class ProbabilityCollection<E> {
 	/**
 	 * Add an object to this collection
 	 * 
-	 * @param object
-	 * @param probability share
+	 * @param object. Not null.
+	 * @param probability share. Must be greater than 0.
+	 * 
+	 * @throws IllegalArgumentException if object is null
+	 * @throws IllegalArgumentException if probability <= 0
 	 */
 	public void add(E object, int probability) {
+		if(object == null) {
+			throw new IllegalArgumentException("Cannot add null object");
+		}
+		
+		if(probability <= 0) {
+			throw new IllegalArgumentException("Probability must be greater than 0");
+		}
+		
 		this.collection.add(new ProbabilitySetElement<E>(object, probability));
 		this.totalProbability += probability;
+		
 		this.updateIndexes();
 	}
 
@@ -92,32 +108,46 @@ public class ProbabilityCollection<E> {
 	 * 
 	 * @param object
 	 * @return True if object was removed, else False.
+	 * 
+	 * @throws IllegalArgumentException if object null
 	 */
 	public boolean remove(E object) {
+		if(object == null) {
+			throw new IllegalArgumentException("Cannot remove null object");
+		}
+		
 		Iterator<ProbabilitySetElement<E>> it = this.iterator();
-		boolean removed = false;
+		boolean removed = it.hasNext();
 		
 		while(it.hasNext()) {
-			ProbabilitySetElement<E> element = it.next();
-			if(element.getObject().equals(object)) {
-				removed = true;
-				this.totalProbability -= element.getProbability();
+			ProbabilitySetElement<E> entry = it.next();
+			if(entry.getObject().equals(object)) {
+				this.totalProbability -= entry.getProbability();
 				it.remove();
 			}
 		}
 		
 		this.updateIndexes();
+		
 		return removed;
 	}
 	
 	/**
-	 * @return Random object based on probability
+	 * Get a random object from this collection, based on probability.
+	 * 
+	 * @return <E> Random object
+	 * 
+	 * @throws IllegalStateException if this collection is empty
 	 */
 	public E get() {
+		if(this.isEmpty()) {
+			throw new IllegalStateException("Cannot get an element out of a empty set");
+		}
+		
 		ProbabilitySetElement<E> toFind = new ProbabilitySetElement<>(null, 0);
 		toFind.setIndex(ThreadLocalRandom.current().nextInt(1, this.totalProbability + 1));
 		
-		return this.collection.floor(toFind).getObject();
+		return Objects.requireNonNull(this.collection.floor(toFind).getObject());
 	}
 	
 	/**
@@ -131,7 +161,8 @@ public class ProbabilityCollection<E> {
 	 * Calculate the size of all element's "block" of space: 
 	 * i.e 1-5, 6-10, 11-14, 15, 16
 	 * 
-	 * We then only need to store the start index of each element
+	 * We then only need to store the start index of each element,
+	 * as we make use of the TreeSet#floor
 	 */
 	private void updateIndexes() {
 		int previousIndex = 0;
@@ -182,12 +213,12 @@ public class ProbabilityCollection<E> {
 		}
 		
 		// Used internally, see this class's documentation
-		protected final int getIndex() {
+		private final int getIndex() {
 			return this.index;
 		}
 		
 		// Used Internally, see this class's documentation
-		protected final int setIndex(int index) {
+		private final int setIndex(int index) {
 			this.index = index;
 			return this.index;
 		}

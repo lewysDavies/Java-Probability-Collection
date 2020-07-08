@@ -3,13 +3,14 @@ package com.lewdev.probabilitylib;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Lewys Davies
  */
 public class ProbabilityCollectionTest {
 
-	@RepeatedTest(value = 1000)
+	@RepeatedTest(value = 10_000)
 	public void test_insert() {
 		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
 		assertEquals(0, collection.size());
@@ -44,12 +45,12 @@ public class ProbabilityCollectionTest {
 		}
 	}
 	
-	@RepeatedTest(value = 1000)
+	@RepeatedTest(value = 10_000)
 	public void test_remove() {
 		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
-		assertTrue(collection.size() == 0);
+		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
-		assertTrue(collection.getTotalProbability() == 0);
+		assertEquals(0, collection.getTotalProbability());
 		
 		String t1 = "Hello";
 		String t2 = "World";
@@ -59,33 +60,36 @@ public class ProbabilityCollectionTest {
 		collection.add(t2, 10);
 		collection.add(t3, 10);
 		
-		assertTrue(collection.size() == 3);
+		assertEquals(3, collection.size());
 		assertFalse(collection.isEmpty());
-		assertTrue(collection.getTotalProbability() == 30);
+		assertEquals(30, collection.getTotalProbability());
 		
-		collection.remove(t2);
+		// Remove t2
+		assertTrue(collection.remove(t2));
 		
-		assertTrue(collection.size() == 2);
+		assertEquals(2, collection.size());
 		assertFalse(collection.isEmpty());
-		assertTrue(collection.getTotalProbability() == 20);
+		assertEquals(20, collection.getTotalProbability());
 		
-		collection.remove(t1);
+		// Remove t1	
+		assertTrue(collection.remove(t1));
 		
-		assertTrue(collection.size() == 1);
+		assertEquals(1, collection.size());
 		assertFalse(collection.isEmpty());
-		assertTrue(collection.getTotalProbability() == 10);
+		assertEquals(10, collection.getTotalProbability());
 		
-		collection.remove(t3);
+		//Remove t3
+		assertTrue(collection.remove(t3));
 		
-		assertTrue(collection.size() == 0);
-		assertTrue(collection.getTotalProbability() == 0);
+		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
 	}
 	
-	@RepeatedTest(value = 1000)
+	@RepeatedTest(value = 10_000)
 	public void test_remove_duplicates() {
 		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
-		assertTrue(collection.size() == 0);
+		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
 		
 		String t1 = "Hello";
@@ -104,27 +108,30 @@ public class ProbabilityCollectionTest {
 			collection.add(t3, 10);
 		}
 		
-		assertTrue(collection.size() == 30);
+		assertEquals(30, collection.size());
 		assertFalse(collection.isEmpty());
-		assertTrue(collection.getTotalProbability() == 300);
+		assertEquals(300, collection.getTotalProbability());
 		
-		collection.remove(t2);
+		//Remove t2
+		assertTrue(collection.remove(t2));
 		
-		assertTrue(collection.size() == 20);
+		assertEquals(20, collection.size());
 		assertFalse(collection.isEmpty());
-		assertTrue(collection.getTotalProbability() == 200);
+		assertEquals(200, collection.getTotalProbability());
 		
-		collection.remove(t1);
+		// Remove t1
+		assertTrue(collection.remove(t1));
 		
-		assertTrue(collection.size() == 10);
+		assertEquals(10, collection.size());
 		assertFalse(collection.isEmpty());
+		assertEquals(100, collection.getTotalProbability());
 		
-		assertTrue(collection.getTotalProbability() == 100);
-		collection.remove(t3);
+		//Remove t3
+		assertTrue(collection.remove(t3));
 		
-		assertTrue(collection.size() == 0);
+		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
-		assertTrue(collection.getTotalProbability() == 0);
+		assertEquals(0, collection.getTotalProbability());
 	}
 
 	@RepeatedTest(1_000_000)
@@ -159,10 +166,82 @@ public class ProbabilityCollectionTest {
 		double bResult = b / (double) totalGets * 100;
 		double cResult = c / (double) totalGets * 100;
 		
-		double acceptableDeviation = 1;
+		double acceptableDeviation = 1; // %
 		
 		assertTrue(Math.abs(aProb - aResult) <= acceptableDeviation);
 		assertTrue(Math.abs(bProb - bResult) <= acceptableDeviation);
 		assertTrue(Math.abs(cProb - cResult) <= acceptableDeviation);
+	}
+	
+	@RepeatedTest(1_000_000)
+	public void test_get_never_null() {
+		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
+		// Tests get will never return null
+		// Just one smallest element get, must not return null
+		collection.add("A", 1);
+		assertNotNull(collection.get());
+		
+		// Reset state
+		collection.remove("A");
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		
+		// Just one large element, must not return null
+		collection.add("A", 5_000_000);
+		assertNotNull(collection.get());
+	}
+	
+	@Test
+	public void test_Errors() {
+		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		// Cannot get from empty collection
+		assertThrows(IllegalStateException.class, () -> {
+			collection.get();
+		});
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		// Cannot add null object
+		assertThrows(IllegalArgumentException.class, () -> { 
+			collection.add(null, 1); 
+		});
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		// Cannot add prob 0
+		assertThrows(IllegalArgumentException.class, () -> {
+			collection.add("A", 0);
+		});
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		// Cannot remove null		
+		assertThrows(IllegalArgumentException.class, () -> {
+			collection.remove(null);
+		});
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		// Cannot contains null
+		assertThrows(IllegalArgumentException.class, () -> {
+			collection.contains(null);
+		});
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
 	}
 }
