@@ -127,7 +127,7 @@ public class ProbabilityCollectionTest {
 		assertTrue(collection.getTotalProbability() == 0);
 	}
 
-	@RepeatedTest(3000)
+	@RepeatedTest(1_000_000)
 	public void test_probability() {
 		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
 		
@@ -140,7 +140,7 @@ public class ProbabilityCollectionTest {
 		collection.add("C", 10);
 		
 		int a = 0, b = 0, c = 0;
-		int totalGets = 10_0000;
+		int totalGets = 100000;
 		
 		for(int i = 0; i < totalGets; i++) {
 			String random = collection.get();
@@ -150,15 +150,15 @@ public class ProbabilityCollectionTest {
 			else if(random.equals("C")) c++;
 		}
 		
-		double aProb = (double) collection.getTotalProbability() / 50.0;
-		double bProb = (double) collection.getTotalProbability() / 25.0;
-		double cProb = (double) collection.getTotalProbability() / 10.0;
+		double aProb = 50.0 / (double) collection.getTotalProbability() * 100;
+		double bProb = 25.0 / (double) collection.getTotalProbability() * 100;
+		double cProb = 10.0 / (double) collection.getTotalProbability() * 100;
 		
-		double aResult = (double) totalGets / a;
-		double bResult = (double) totalGets / b;
-		double cResult = (double) totalGets / c;
+		double aResult = a / (double) totalGets * 100;
+		double bResult = b / (double) totalGets * 100;
+		double cResult = c / (double) totalGets * 100;
 		
-		double acceptableDeviation = 0.5; //5 %
+		double acceptableDeviation = 1;
 		
 		assertTrue(Math.abs(aProb - aResult) <= acceptableDeviation);
 		assertTrue(Math.abs(bProb - bResult) <= acceptableDeviation);
