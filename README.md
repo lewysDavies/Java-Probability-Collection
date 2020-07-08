@@ -15,13 +15,13 @@ String random = collection.get();
 # Proven Probability
 The probability test is run **1,000,000 times**. Each time getting **100,000** random elements and counting the spread. The test would not pass if the spread had over **3.5%** deviation from the expected probability.
 
-Here is a real world example which used 1,000 selects:
+A real world example is provided in App.java, You can run this file to view the accurate probability:
 ```
-A's Probability is 0.38% | Was selected 0.39% of the time
-B's Probability is 0.38% | Was selected 0.38% of the time
-C's Probability is 0.19% | Was selected 0.18% of the time
-D's Probability is 0.04% | Was selected 0.04% of the time
-RareAF's Probability is 0.01% | Was selected 0.01% of the time
+   Prob     |  Actual
+-----------------------
+A: 58.824%  |  58.975% 
+B: 29.412%  |  29.256% 
+C: 11.765%  |  11.769% 
 ```
 
 # Performance
