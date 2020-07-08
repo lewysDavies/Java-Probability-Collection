@@ -1,6 +1,6 @@
 package com.lewdev.probabilitylib;
 
-public class App {
+public class ExampleApp {
 
 	public static void main(String[] args) {
 		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
