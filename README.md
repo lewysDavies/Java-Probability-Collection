@@ -13,7 +13,7 @@ String random = collection.get();
 ```
 
 # Proven Probability
-The probability test is run **1,000,000 times**. Each time getting **100,000** random elements and counting the spread. The test would not pass if the spread had over **3.5%** deviation from the expected probability.
+The probability test is run **1,000,000 times**. Each time getting **100,000** random elements and counting the spread. The test would not pass if the spread had over **1%** deviation from the expected probability.
 
 A real world example is provided in App.java, You can run this file to view the accurate probability:
 ```
