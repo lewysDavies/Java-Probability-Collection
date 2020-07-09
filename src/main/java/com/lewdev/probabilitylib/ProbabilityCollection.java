@@ -1,10 +1,31 @@
+/*
+* Copyright (c) 2020 Lewys Davies
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in all
+* copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+* SOFTWARE.
+*/
 package com.lewdev.probabilitylib;
 
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.SplittableRandom;
 import java.util.TreeSet;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * ProbabilityCollection for retrieving random elements based on probability.
@@ -28,11 +49,9 @@ import java.util.concurrent.ThreadLocalRandom;
  * @param <E> Type of elements
  */
 public class ProbabilityCollection<E> {
-
-	protected final Comparator<ProbabilitySetElement<E>> comparator = 
-			(o1, o2)-> Integer.compare(o1.getIndex(), o2.getIndex());
 	
 	private final TreeSet<ProbabilitySetElement<E>> collection;
+	private final SplittableRandom random = new SplittableRandom();
 
 	private int totalProbability;
 	
@@ -40,7 +59,7 @@ public class ProbabilityCollection<E> {
 	 * Construct a new Probability Collection
 	 */
 	public ProbabilityCollection() {
-		this.collection = new TreeSet<>(this.comparator);
+		this.collection = new TreeSet<>(Comparator.comparingInt(ProbabilitySetElement::getIndex));
 		this.totalProbability = 0;
 	}
 
@@ -52,20 +71,20 @@ public class ProbabilityCollection<E> {
 	}
 	
 	/**
-	 * @return Collection contains no elements
+	 * @return True if collection contains no elements, else False
 	 */
 	public boolean isEmpty() {
 		return this.collection.isEmpty();
 	}
 	
 	/**
-	 * @param object
-	 * @return True if the collection contains the object, else False
-	 * @throws IllegalArgumentException if object null
+	 * @param <E> object
+	 * @return True if collection contains the object, else False
+	 * @throws IllegalArgumentException if object is null
 	 */
 	public boolean contains(E object) {
 		if(object == null) {
-			throw new IllegalArgumentException("Cannot check if null object is contained in a collection");
+			throw new IllegalArgumentException("Cannot check if null object is contained in this collection");
 		}
 		
 		return this.collection.stream()
@@ -73,7 +92,7 @@ public class ProbabilityCollection<E> {
 	}
 
 	/**
-	 * @return Iterator over collection
+	 * @return Iterator over this collection
 	 */
 	public Iterator<ProbabilitySetElement<E>> iterator() {
 		return this.collection.iterator();
@@ -82,7 +101,7 @@ public class ProbabilityCollection<E> {
 	/**
 	 * Add an object to this collection
 	 * 
-	 * @param object. Not null.
+	 * @param <E> object. Not null.
 	 * @param probability share. Must be greater than 0.
 	 * 
 	 * @throws IllegalArgumentException if object is null
@@ -106,10 +125,10 @@ public class ProbabilityCollection<E> {
 	/**
 	 * Remove a object from this collection
 	 * 
-	 * @param object
+	 * @param <E> object
 	 * @return True if object was removed, else False.
 	 * 
-	 * @throws IllegalArgumentException if object null
+	 * @throws IllegalArgumentException if object is null
 	 */
 	public boolean remove(E object) {
 		if(object == null) {
@@ -141,11 +160,11 @@ public class ProbabilityCollection<E> {
 	 */
 	public E get() {
 		if(this.isEmpty()) {
-			throw new IllegalStateException("Cannot get an element out of a empty set");
+			throw new IllegalStateException("Cannot get an element out of a empty collection");
 		}
 		
 		ProbabilitySetElement<E> toFind = new ProbabilitySetElement<>(null, 0);
-		toFind.setIndex(ThreadLocalRandom.current().nextInt(1, this.totalProbability + 1));
+		toFind.setIndex(this.random.nextInt(1, this.totalProbability + 1));
 		
 		return Objects.requireNonNull(this.collection.floor(toFind).getObject());
 	}
@@ -164,7 +183,7 @@ public class ProbabilityCollection<E> {
 	 * We then only need to store the start index of each element,
 	 * as we make use of the TreeSet#floor
 	 */
-	private void updateIndexes() {
+	private final void updateIndexes() {
 		int previousIndex = 0;
 		
 		for(ProbabilitySetElement<E> entry : this.collection) {
@@ -190,7 +209,7 @@ public class ProbabilityCollection<E> {
 		private int index;
 		
 		/**
-		 * @param object
+		 * @param <T> object
 		 * @param probability
 		 */
 		protected ProbabilitySetElement(T object, int probability) {
@@ -199,7 +218,7 @@ public class ProbabilityCollection<E> {
 		}
 
 		/**
-		 * @return The actual object
+		 * @return <T> The actual object
 		 */
 		public final T getObject() {
 			return this.object;
