@@ -5,11 +5,11 @@
 
 	<groupId>com.lewdev</groupId>
 	<artifactId>probability-lib</artifactId>
-	<version>0.5</version>
+	<version>0.6</version>
 	<packaging>jar</packaging>
 
 	<name>probability-lib</name>
-	<url>http://example.com</url>
+	<url>lewdev.uk</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
