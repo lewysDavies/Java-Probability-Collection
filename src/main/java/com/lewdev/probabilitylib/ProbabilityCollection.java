@@ -23,6 +23,7 @@ package com.lewdev.probabilitylib;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NavigableSet;
 import java.util.Objects;
 import java.util.SplittableRandom;
 import java.util.TreeSet;
@@ -50,7 +51,7 @@ import java.util.TreeSet;
  */
 public class ProbabilityCollection<E> {
 	
-	private final TreeSet<ProbabilitySetElement<E>> collection;
+	private final NavigableSet<ProbabilitySetElement<E>> collection;
 	private final SplittableRandom random = new SplittableRandom();
 
 	private int totalProbability;
