@@ -137,13 +137,14 @@ public class ProbabilityCollection<E> {
 		}
 		
 		Iterator<ProbabilitySetElement<E>> it = this.iterator();
-		boolean removed = it.hasNext();
+		boolean removed = false;
 		
 		while(it.hasNext()) {
 			ProbabilitySetElement<E> entry = it.next();
 			if(entry.getObject().equals(object)) {
 				this.totalProbability -= entry.getProbability();
 				it.remove();
+				removed = true;
 			}
 		}
 		
