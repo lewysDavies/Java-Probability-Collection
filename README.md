@@ -50,7 +50,7 @@ or for the fancy users, you could use Maven:<br>
 <dependency>
     <groupId>com.github.lewysDavies</groupId>
     <artifactId>Java-Probability-Collection</artifactId>
-    <version>v0.6</version>
+    <version>v0.7</version>
 </dependency>
 ```
 **Maven Shade This Dependency:**
