@@ -117,10 +117,11 @@ public class ProbabilityCollection<E> {
 			throw new IllegalArgumentException("Probability must be greater than 0");
 		}
 		
-		this.collection.add(new ProbabilitySetElement<E>(object, probability));
-		this.totalProbability += probability;
+		ProbabilitySetElement<E> entry = new ProbabilitySetElement<E>(object, probability);
+		entry.setIndex(totalProbability + 1);
 		
-		this.updateIndexes();
+		this.collection.add(entry);
+		this.totalProbability += probability;
 	}
 
 	/**
