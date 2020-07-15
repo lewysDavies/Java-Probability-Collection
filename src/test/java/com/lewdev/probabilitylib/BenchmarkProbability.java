@@ -1,18 +1,17 @@
 package com.lewdev.probabilitylib;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.Timeout;
-import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -20,10 +19,9 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 @BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Benchmark)
-@Warmup(iterations = 5, time = 5)
-@Timeout(time = 25, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 2)
+@Fork(value = 2, jvmArgs = {"-Xms2G", "-Xmx2G"})
 public class BenchmarkProbability {
 
 	public static void main(String[] args) throws RunnerException {
@@ -35,52 +33,51 @@ public class BenchmarkProbability {
 		new Runner(opt).run();
 	}
 	
-	private final int elements = 10_000;
+	public int elements = 1_000;
 	
-	ProbabilityMap<Integer> map = new ProbabilityMap<>();
-	ProbabilityCollection<Integer> collection = new ProbabilityCollection<>();
+	public int toAdd = elements + 1;
+	public int toAddProb = 10;
 	
-	private Map<Integer, Integer> addAllTest = new HashMap<>();
+	private ProbabilityMap<Integer> map;
+	private ProbabilityCollection<Integer> collection;
 	
-	@Setup
+	@Setup(Level.Iteration)
 	public void setup() {
+		this.map = new ProbabilityMap<>();
+		this.collection = new ProbabilityCollection<>();
+		
 		for(int i = 0; i < elements; i++) {
 			map.add(i, 1);
 			collection.add(i, 1);
 		}
+	}
+	
+	@TearDown(Level.Iteration)
+	public void tearDown() {
+		this.map.clear();
+		this.collection.clear();
 		
-		for(int i = elements; i < elements * 2; i++) {
-			addAllTest.put(i, 1);
-		}
+		this.map = null;
+		this.collection = null;
 	}
 	
 	@Benchmark
-	public void mapAddSingle(Blackhole bh) {
-		boolean added = this.map.add(25000, 1);
-		bh.consume(added);
-	}
-	
-	@Benchmark
-	public void mapAddAll() {
-		map.addAll(addAllTest);
+	public void mapAddSingle() {
+		this.map.add(toAdd, toAddProb);
 	}
 	
 	@Benchmark
 	public void collectionAddSingle() {
-		this.collection.add(25000, 1);
+		this.collection.add(toAdd, toAddProb);
 	}
 	
 	@Benchmark
 	public void mapGet(Blackhole bh) {
-		for(int i = 0; i < elements * 2; i++) {
-			bh.consume(map.get());
-		}
+		bh.consume(this.map.get());
 	}
 	
 	@Benchmark
 	public void collectionGet(Blackhole bh) {
-		for(int i = 0; i < elements * 2; i++) {
-			bh.consume(collection.get());
-		}
+		bh.consume(this.collection.get());
 	}
 }
