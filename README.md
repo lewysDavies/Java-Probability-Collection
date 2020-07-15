@@ -25,8 +25,7 @@ C: 11.765%  |  11.769%
 ```
 
 # Performance
-Get performance has been significantly improved in comparison to my previous map implementation. This has been achieved with custom compared TreeSets. 
-0.314ms to just 0.004.
+Get performance has been significantly improved in comparison to my previous map implementation. This has been achieved with custom compared TreeSets.
 ```
 Benchmark                                 Mode  Cnt      Score     Error  Units
 BenchmarkProbability.collectionAddSingle  avgt    5    501.688 ±  33.925  ns/op
