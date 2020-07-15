@@ -28,11 +28,11 @@ C: 11.765%  |  11.769%
 Get performance has been significantly improved in comparison to my previous map implementation. This has been achieved with custom compared TreeSets. 
 0.314ms to just 0.004.
 ```
-Benchmark                Mode  Cnt  Score    Error   Units
-new_collectionAddSingle  avgt   10  0.002 ±  0.001   s/op
-new_collectionGet        avgt   10  0.004 ±  0.001   s/op
-old_mapAddSingle         avgt   10  0.001 ±  0.001   s/op
-old_mapGet               avgt   10  0.314 ±  0.069   s/op
+Benchmark                                 Mode  Cnt      Score     Error  Units
+BenchmarkProbability.collectionAddSingle  avgt    5    501.688 ±  33.925  ns/op
+BenchmarkProbability.collectionGet        avgt    5     69.373 ±   2.198  ns/op
+BenchmarkProbability.mapAddSingle         avgt    5  25809.712 ± 984.980  ns/op
+BenchmarkProbability.mapGet               avgt    5    902.414 ±  22.388  ns/op
 ```
 
 # Installation
@@ -50,7 +50,7 @@ or for the fancy users, you could use Maven:<br>
 <dependency>
     <groupId>com.github.lewysDavies</groupId>
     <artifactId>Java-Probability-Collection</artifactId>
-    <version>v0.7</version>
+    <version>v0.8</version>
 </dependency>
 ```
 **Maven Shade This Dependency:**
