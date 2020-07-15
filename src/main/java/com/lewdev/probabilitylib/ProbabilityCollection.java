@@ -118,7 +118,7 @@ public class ProbabilityCollection<E> {
 		}
 		
 		ProbabilitySetElement<E> entry = new ProbabilitySetElement<E>(object, probability);
-		entry.setIndex(totalProbability + 1);
+		entry.setIndex(this.totalProbability + 1);
 		
 		this.collection.add(entry);
 		this.totalProbability += probability;
