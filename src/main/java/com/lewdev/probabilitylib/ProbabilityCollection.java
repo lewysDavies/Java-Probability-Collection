@@ -45,7 +45,7 @@ import java.util.TreeSet;
  * </ul>
  * 
  * @author Lewys Davies
- * @version 0.7
+ * @version 0.8
  *
  * @param <E> Type of elements
  */
