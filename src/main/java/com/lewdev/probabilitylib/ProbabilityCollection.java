@@ -45,7 +45,7 @@ import java.util.TreeSet;
  * </ul>
  * 
  * @author Lewys Davies
- * @version 0.6
+ * @version 0.7
  *
  * @param <E> Type of elements
  */
@@ -153,6 +153,14 @@ public class ProbabilityCollection<E> {
 	}
 	
 	/**
+	 * Remove all objects from this collection
+	 */
+	public void clear() {
+		this.collection.clear();
+		this.totalProbability = 0;
+	}
+	
+	/**
 	 * Get a random object from this collection, based on probability.
 	 * 
 	 * @return <E> Random object
@@ -161,7 +169,7 @@ public class ProbabilityCollection<E> {
 	 */
 	public E get() {
 		if(this.isEmpty()) {
-			throw new IllegalStateException("Cannot get an element out of a empty collection");
+			throw new IllegalStateException("Cannot get an object out of a empty collection");
 		}
 		
 		ProbabilitySetElement<E> toFind = new ProbabilitySetElement<>(null, 0);
