@@ -133,6 +133,58 @@ public class ProbabilityCollectionTest {
 		assertTrue(collection.isEmpty());
 		assertEquals(0, collection.getTotalProbability());
 	}
+	
+	@RepeatedTest(value = 10_000)
+	public void test_clear() {
+		ProbabilityCollection<String> collection = new ProbabilityCollection<>();
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		collection.clear();
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		collection.add("tmp", 1);
+		
+		assertEquals(1, collection.size());
+		assertFalse(collection.isEmpty());
+		assertEquals(1, collection.getTotalProbability());
+		
+		collection.clear();
+		
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+		assertEquals(0, collection.getTotalProbability());
+		
+		String t1 = "Hello";
+		String t2 = "World";
+		String t3 = "!";
+		
+		for(int i = 0; i < 10; i++) {
+			collection.add(t1, 10);
+		}
+		
+		for(int i = 0; i < 10; i++) {
+			collection.add(t2, 10);
+		}
+		
+		for(int i = 0; i < 10; i++) {
+			collection.add(t3, 10);
+		}
+		
+		assertEquals(30, collection.size());
+		assertFalse(collection.isEmpty());
+		assertEquals(300, collection.getTotalProbability());
+		
+		collection.clear();
+		
+		assertEquals(0, collection.getTotalProbability());
+		assertEquals(0, collection.size());
+		assertTrue(collection.isEmpty());
+	}
 
 	@RepeatedTest(1_000_000)
 	public void test_probability() {
