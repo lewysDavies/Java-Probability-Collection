@@ -1,9 +1,9 @@
 package com.lewdev.probabilitylib;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Lewys Davies
@@ -250,47 +250,28 @@ public class ProbabilityCollectionTest {
 		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
 		assertEquals(0, collection.getTotalProbability());
-		
+
 		// Cannot get from empty collection
-		assertThrows(IllegalStateException.class, () -> {
-			collection.get();
-		});
+		assertThrows(IllegalStateException.class, collection::get);
 		
 		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
 		assertEquals(0, collection.getTotalProbability());
-		
-		// Cannot add null object
-		assertThrows(IllegalArgumentException.class, () -> { 
-			collection.add(null, 1); 
-		});
 		
 		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
 		assertEquals(0, collection.getTotalProbability());
 		
 		// Cannot add prob 0
-		assertThrows(IllegalArgumentException.class, () -> {
-			collection.add("A", 0);
-		});
+		assertThrows(IllegalArgumentException.class, () -> collection.add("A", 0));
 		
 		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
 		assertEquals(0, collection.getTotalProbability());
 		
-		// Cannot remove null		
-		assertThrows(IllegalArgumentException.class, () -> {
-			collection.remove(null);
-		});
-		
 		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());
 		assertEquals(0, collection.getTotalProbability());
-		
-		// Cannot contains null
-		assertThrows(IllegalArgumentException.class, () -> {
-			collection.contains(null);
-		});
 		
 		assertEquals(0, collection.size());
 		assertTrue(collection.isEmpty());

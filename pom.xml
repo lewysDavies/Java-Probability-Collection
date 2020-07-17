@@ -19,6 +19,15 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>19.0.0</version>
+			<scope>compile</scope>
+<!--			Change scope to provided when deploying to a repository, compile is only for the tests to pass. Use gradle
+				for a permanent solution.-->
+		</dependency>
+
+		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
 			<version>5.1.0</version>
