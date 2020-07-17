@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.lewdev'
+version = '0.8'
+description = 'probability-lib'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.jetbrains:annotations:19.0.0'
+    testImplementation 'org.openjdk.jmh:jmh-generator-annprocess:1.23'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    testImplementation 'org.hamcrest:hamcrest-core:2.2'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
