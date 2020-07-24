@@ -50,7 +50,7 @@ import java.util.TreeSet;
  *
  * @param <E> Type of elements
  */
-public class ProbabilityCollection<E> {
+public final class ProbabilityCollection<E> {
 
     private final NavigableSet<ProbabilitySetElement<E>> collection;
     private final SplittableRandom random = new SplittableRandom();
@@ -222,7 +222,7 @@ public class ProbabilityCollection<E> {
         /**
          * @return <T> The actual object
          */
-        public final T getObject() {
+        public T getObject() {
             return this.object;
         }
 
