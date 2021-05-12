@@ -205,11 +205,11 @@ public final class ProbabilityCollection<E> {
      *
      * @param <T> Type of element
      */
-    final static class ProbabilitySetElement<T> {
+    public final static class ProbabilitySetElement<T> {
         private final T object;
         private final int probability;
         private int index;
-
+        
         /**
          * @param <T>         object
          * @param probability share within the collection
